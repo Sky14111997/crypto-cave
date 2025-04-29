@@ -1,8 +1,22 @@
 // src/components/CryptoTable/CryptoTable.tsx
 import React from 'react';
 import styles from './CryptoTable.module.css';
-import { formatNumber, formatPercent } from '../../utils/format';
-import { MarketData } from '../../types';
+import {
+  formatCurrency,
+  formatNumber,
+  formatPercentage,
+} from '../../utils/format';
+
+export interface MarketData {
+  id: string;
+  name: string;
+  symbol: string;
+  current_price: number;
+  market_cap: number;
+  total_volume: number;
+  circulating_supply: number;
+  price_change_percentage_24h: number;
+}
 
 interface CryptoTableProps {
   data: MarketData[];
@@ -23,22 +37,27 @@ export default function CryptoTable({ data }: CryptoTableProps) {
         </tr>
       </thead>
       <tbody>
-        {data.map((c, i) => (
-          <tr key={c.id}>
-            <td>{i + 1}</td>
+        {data.map((coin, idx) => (
+          <tr key={coin.id}>
+            <td>{idx + 1}</td>
             <td>
-              {c.name} <span className={styles.symbol}>{c.symbol.toUpperCase()}</span>
+              {coin.name}{' '}
+              <span className={styles.symbol}>
+                {coin.symbol.toUpperCase()}
+              </span>
             </td>
-            <td>{formatNumber(c.current_price)}</td>
-            <td>{formatNumber(c.market_cap)}</td>
-            <td>{formatNumber(c.total_volume)}</td>
-            <td>{formatNumber(c.circulating_supply)}</td>
-            <td className={
-                c.price_change_percentage_24h >= 0
-                  ? styles.positive
-                  : styles.negative
-              }>
-              {formatPercent(c.price_change_percentage_24h)}
+            <td>{formatCurrency(coin.current_price)}</td>
+            <td>{formatNumber(coin.market_cap)}</td>
+            <td>{formatNumber(coin.total_volume)}</td>
+            <td>{formatNumber(coin.circulating_supply)}</td>
+            <td
+              className={
+                coin.price_change_percentage_24h >= 0
+                  ? styles.changePositive
+                  : styles.changeNegative
+              }
+            >
+              {formatPercentage(coin.price_change_percentage_24h)}
             </td>
           </tr>
         ))}

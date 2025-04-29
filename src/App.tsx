@@ -1,23 +1,44 @@
 // src/App.tsx
 import React from 'react';
-import Container from './components/Layout/Container';
 import CoinCard from './components/CoinCard/CoinCard';
 import CryptoTable from './components/CryptoTable/CryptoTable';
 import { useFetch } from './hooks/useFetch';
-import { CryptoData } from './types';
+import { MarketData } from './types';
 import styles from './App.module.css';
 
 export default function App() {
-  const trending = useFetch<CryptoData[]>('/api/trending');
-  const newlyAdded = useFetch<CryptoData[]>('/api/newly-added');
-  const top5 = useFetch<CryptoData[]>('/api/top-5');
+  // Trending Coins
+  const { data: trending } = useFetch<MarketData[]>(
+    'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=gecko_desc&per_page=3&page=1&sparkline=false'
+  );
+
+  // Newly Added Coins
+  const { data: newlyAdded } = useFetch<MarketData[]>(
+    'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=3&page=2&sparkline=false'
+  );
+
+  // Top 5 Cryptocurrencies
+  const { data: top5 } = useFetch<MarketData[]>(
+    'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=5&page=1&sparkline=false'
+  );
 
   return (
-    <Container>
-      <section className={styles.section}>
+    <div className={styles.app}>
+      {/* Hero */}
+      <section className={styles.hero}>
+        <h1>CryptoCave – The Future</h1>
+        <p>
+          Track real-time cryptocurrency prices, market cap, and trading
+          volume. Get detailed information about the most promising digital
+          assets.
+        </p>
+      </section>
+
+      {/* Trending */}
+      <section className={styles.mainContent}>
         <h2>Trending Coins</h2>
         <div className={styles.cardGrid}>
-          {trending.data?.map(c => (
+          {trending?.map((c) => (
             <CoinCard
               key={c.id}
               name={c.name}
@@ -29,10 +50,11 @@ export default function App() {
         </div>
       </section>
 
-      <section className={styles.section}>
+      {/* Newly Added */}
+      <section className={styles.mainContent}>
         <h2>Newly Added</h2>
         <div className={styles.cardGrid}>
-          {newlyAdded.data?.map(c => (
+          {newlyAdded?.map((c) => (
             <CoinCard
               key={c.id}
               name={c.name}
@@ -44,11 +66,11 @@ export default function App() {
         </div>
       </section>
 
-      <section className={styles.section}>
+      {/* Top Table */}
+      <section className={styles.mainContent}>
         <h2>Top Cryptocurrencies</h2>
-        {/* always pass an array */}
-        <CryptoTable data={top5.data ?? []} />
+        <CryptoTable data={top5 || []} />
       </section>
-    </Container>
+    </div>
   );
 }
