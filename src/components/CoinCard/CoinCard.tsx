@@ -19,17 +19,15 @@ export default function CoinCard({
   return (
     <div className={styles.card}>
       <h3 className={styles.title}>{name}</h3>
-      <span className={styles.symbol}>{symbol.toUpperCase()}</span>
-      <div className={styles.footer}>
-        <span className={styles.price}>{formatCurrency(price)}</span>
-        <span
-          className={
-            change >= 0 ? styles.changePositive : styles.changeNegative
-          }
-        >
-          {formatPercentage(change)}
-        </span>
-      </div>
+      <p className={styles.symbol}>{symbol}</p>
+      <p className={styles.price}>{formatCurrency(price)}</p>
+      <p
+        className={`${styles.change} ${
+          change >= 0 ? styles.up : styles.down
+        }`}
+      >
+        {formatPercentage(change)}
+      </p>
     </div>
   );
 }

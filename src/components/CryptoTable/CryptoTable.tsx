@@ -3,8 +3,8 @@ import React from 'react';
 import styles from './CryptoTable.module.css';
 import {
   formatCurrency,
-  formatNumber,
   formatPercentage,
+  formatAbbreviated,
 } from '../../utils/format';
 
 export interface MarketData {
@@ -37,27 +37,25 @@ export default function CryptoTable({ data }: CryptoTableProps) {
         </tr>
       </thead>
       <tbody>
-        {data.map((coin, idx) => (
-          <tr key={coin.id}>
-            <td>{idx + 1}</td>
+        {data.map((c, i) => (
+          <tr key={c.id}>
+            <td>{i + 1}</td>
             <td>
-              {coin.name}{' '}
-              <span className={styles.symbol}>
-                {coin.symbol.toUpperCase()}
-              </span>
+              <span className={styles.name}>{c.name}</span>{' '}
+              <span className={styles.symbol}>{c.symbol}</span>
             </td>
-            <td>{formatCurrency(coin.current_price)}</td>
-            <td>{formatNumber(coin.market_cap)}</td>
-            <td>{formatNumber(coin.total_volume)}</td>
-            <td>{formatNumber(coin.circulating_supply)}</td>
+            <td>{formatCurrency(c.current_price)}</td>
+            <td>{formatAbbreviated(c.market_cap)}</td>
+            <td>{formatAbbreviated(c.total_volume)}</td>
+            <td>{formatAbbreviated(c.circulating_supply)}</td>
             <td
               className={
-                coin.price_change_percentage_24h >= 0
-                  ? styles.changePositive
-                  : styles.changeNegative
+                c.price_change_percentage_24h >= 0
+                  ? styles.up
+                  : styles.down
               }
             >
-              {formatPercentage(coin.price_change_percentage_24h)}
+              {formatPercentage(c.price_change_percentage_24h)}
             </td>
           </tr>
         ))}
