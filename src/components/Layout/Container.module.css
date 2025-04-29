@@ -1,18 +1,6 @@
-.card {
-  background: #141621;
-  border-radius: 0.5rem;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.price {
-  font-size: 1.25rem;
-  font-weight: bold;
-}
-.changePos {
-  color: #16c784;
-}
-.changeNeg {
-  color: #ea3943;
+/* src/components/Layout/Container.module.css */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }

@@ -1,20 +1,23 @@
 // src/utils/format.ts
+
 /**
- * Format a number as USD currency, e.g. 1234.56 → "$1,234.56"
+ * Number কে US ডলার হিসেবে ফরম্যাট করবে, e.g. 1234.5 → "$1,234.50"
  */
-export function formatCurrency(value: number): string {
-  return value.toLocaleString(undefined, {
+export function formatCurrency(value: number | string | undefined): string {
+  if (value == null || isNaN(Number(value))) return '–';
+  const num = typeof value === 'string' ? parseFloat(value) : value;
+  return num.toLocaleString(undefined, {
     style: 'currency',
     currency: 'USD',
-    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
   });
 }
 
 /**
- * Format a raw percentage (e.g. -2.3456) → "-2.35%"
- * Automatically adds "+" for positive values.
+ * Percentage ফরম্যাট, e.g. 5.234 → "5.23%"
  */
-export function formatPercentage(value: number): string {
-  const sign = value > 0 ? '+' : '';
-  return sign + value.toFixed(2) + '%';
+export function formatPercentage(value: number | string | undefined): string {
+  if (value == null || isNaN(Number(value))) return '–';
+  const num = typeof value === 'string' ? parseFloat(value) : value;
+  return `${num.toFixed(2)}%`;
 }
