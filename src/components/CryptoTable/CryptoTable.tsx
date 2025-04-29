@@ -1,25 +1,11 @@
 // src/components/CryptoTable/CryptoTable.tsx
 import React from 'react';
 import styles from './CryptoTable.module.css';
-import {
-  formatCurrency,
-  formatPercentage,
-  formatAbbreviated,
-} from '../../utils/format';
-
-export interface MarketData {
-  id: string;
-  name: string;
-  symbol: string;
-  current_price: number;
-  market_cap: number;
-  total_volume: number;
-  circulating_supply: number;
-  price_change_percentage_24h: number;
-}
+import { formatCurrency, formatNumber, formatPercentage } from '../../utils/format';
+import { CoinMarket } from '../../types';
 
 interface CryptoTableProps {
-  data: MarketData[];
+  data: CoinMarket[];
 }
 
 export default function CryptoTable({ data }: CryptoTableProps) {
@@ -41,20 +27,14 @@ export default function CryptoTable({ data }: CryptoTableProps) {
           <tr key={c.id}>
             <td>{i + 1}</td>
             <td>
-              <span className={styles.name}>{c.name}</span>{' '}
-              <span className={styles.symbol}>{c.symbol}</span>
+              {c.name}{' '}
+              <span className={styles.symbol}>{c.symbol.toUpperCase()}</span>
             </td>
             <td>{formatCurrency(c.current_price)}</td>
-            <td>{formatAbbreviated(c.market_cap)}</td>
-            <td>{formatAbbreviated(c.total_volume)}</td>
-            <td>{formatAbbreviated(c.circulating_supply)}</td>
-            <td
-              className={
-                c.price_change_percentage_24h >= 0
-                  ? styles.up
-                  : styles.down
-              }
-            >
+            <td>{formatCurrency(c.market_cap)}</td>
+            <td>{formatCurrency(c.total_volume)}</td>
+            <td>{formatNumber(c.circulating_supply)}</td>
+            <td className={c.price_change_percentage_24h >= 0 ? styles.positive : styles.negative}>
               {formatPercentage(c.price_change_percentage_24h)}
             </td>
           </tr>

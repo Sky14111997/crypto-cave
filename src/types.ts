@@ -1,5 +1,9 @@
+// src/types.ts
 
-export interface MarketData {
+/**
+ * CoinGecko থেকে পাওয়া মার্কেট ডেটার স্ট্রাকচার
+ */
+export interface CoinMarket {
   id: string;
   name: string;
   symbol: string;

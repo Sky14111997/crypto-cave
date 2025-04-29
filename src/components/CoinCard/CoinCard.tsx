@@ -10,22 +10,13 @@ interface CoinCardProps {
   change: number;
 }
 
-export default function CoinCard({
-  name,
-  symbol,
-  price,
-  change,
-}: CoinCardProps) {
+export default function CoinCard({ name, symbol, price, change }: CoinCardProps) {
   return (
     <div className={styles.card}>
-      <h3 className={styles.title}>{name}</h3>
-      <p className={styles.symbol}>{symbol}</p>
+      <h3>{name}</h3>
+      <span className={styles.symbol}>{symbol.toUpperCase()}</span>
       <p className={styles.price}>{formatCurrency(price)}</p>
-      <p
-        className={`${styles.change} ${
-          change >= 0 ? styles.up : styles.down
-        }`}
-      >
+      <p className={change >= 0 ? styles.positive : styles.negative}>
         {formatPercentage(change)}
       </p>
     </div>

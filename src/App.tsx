@@ -1,40 +1,25 @@
 // src/App.tsx
 import React from 'react';
+import { useFetch } from './hooks/useFetch';
 import CoinCard from './components/CoinCard/CoinCard';
 import CryptoTable from './components/CryptoTable/CryptoTable';
-import { useFetch } from './hooks/useFetch';
-import { MarketData } from './types';
 import styles from './App.module.css';
+import { CoinMarket } from './types';
 
 export default function App() {
-  // Trending Coins
-  const { data: trending } = useFetch<MarketData[]>(
-    'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=gecko_desc&per_page=3&page=1&sparkline=false'
+  // ৩ টি আলাদা এন্ডপয়েন্ট থেকে ডেটা নিয়ে আসছি
+  const { data: trending } = useFetch<CoinMarket[]>(
+    'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=3&page=1'
   );
-
-  // Newly Added Coins
-  const { data: newlyAdded } = useFetch<MarketData[]>(
-    'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=3&page=2&sparkline=false'
+  const { data: newlyAdded } = useFetch<CoinMarket[]>(
+    'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=gecko_desc&per_page=3&page=2'
   );
-
-  // Top 5 Cryptocurrencies
-  const { data: top5 } = useFetch<MarketData[]>(
-    'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=5&page=1&sparkline=false'
+  const { data: top5 } = useFetch<CoinMarket[]>(
+    'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=5&page=1'
   );
 
   return (
     <div className={styles.app}>
-      {/* Hero */}
-      <section className={styles.hero}>
-        <h1>CryptoCave – The Future</h1>
-        <p>
-          Track real-time cryptocurrency prices, market cap, and trading
-          volume. Get detailed information about the most promising digital
-          assets.
-        </p>
-      </section>
-
-      {/* Trending */}
       <section className={styles.mainContent}>
         <h2>Trending Coins</h2>
         <div className={styles.cardGrid}>
@@ -50,7 +35,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* Newly Added */}
       <section className={styles.mainContent}>
         <h2>Newly Added</h2>
         <div className={styles.cardGrid}>
@@ -66,7 +50,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* Top Table */}
       <section className={styles.mainContent}>
         <h2>Top Cryptocurrencies</h2>
         <CryptoTable data={top5 || []} />
