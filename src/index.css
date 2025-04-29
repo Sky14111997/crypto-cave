@@ -1,0 +1,32 @@
+:root {
+  --bg-dark: #0b0f28;
+  --nav-bg: #0a1128;
+  --card-bg: #111827;
+  --border: #374151;
+  --text-light: #f1f5f9;
+  --text-subtle: #94a3b8;
+  --btn-blue: #2563eb;
+  --btn-blue-dark: #1e40af;
+  --up: #10b981;
+  --down: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0; padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+a { text-decoration: none; color: inherit; }
+
+h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  color: var(--text-light);
+}

@@ -1,0 +1,31 @@
+/* src/components/CoinCard/CoinCard.module.css */
+.card {
+  background: var(--bg-card);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--text-light);
+}
+.subtitle {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+.price {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-light);
+}
+.positiveChange {
+  color: var(--green);
+  font-weight: 500;
+}
+.negativeChange {
+  color: var(--red);
+  font-weight: 500;
+}
